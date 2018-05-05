@@ -68,7 +68,7 @@ static CGFloat MinActionSpeed = 500;
 -(void)setLeftViewController:(UIViewController *)leftViewController{
     _leftViewController = leftViewController;
     //提前设置ViewController的viewframe，为了懒加载view造成的frame问题，所以通过setter设置了新的view
-    _leftViewController.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [self menuWidth], self.view.bounds.size.height)];
+    _leftViewController.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0.00001, self.view.bounds.size.height)];
     _leftViewController.view.alpha = 0;
     //自定义View需要主动调用viewDidLoad
     [_leftViewController viewDidLoad];
@@ -108,7 +108,6 @@ static CGFloat MinActionSpeed = 500;
 
 //更新左侧菜单位置
 - (void)updateLeftMenuFrame {
-    _leftViewController.view.alpha = 0;
     _leftViewController.view.center = CGPointMake(CGRectGetMinX(_rootViewController.view.frame)/2, _leftViewController.view.center.y);
 }
 
