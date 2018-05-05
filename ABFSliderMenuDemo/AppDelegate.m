@@ -24,6 +24,7 @@
     ViewController *vc = [[ViewController alloc] init];
     UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:vc];
     rootNav.navigationBar.tintColor = [UIColor whiteColor];
+    rootNav.navigationBar.barTintColor = [UIColor greenColor];
     [rootNav.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
     //左侧菜单
     ABFLeftViewController *leftVC = [[ABFLeftViewController alloc] init];
