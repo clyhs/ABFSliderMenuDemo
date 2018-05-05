@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.view.backgroundColor = [UIColor whiteColor];
+    //self.view.backgroundColor = [UIColor whiteColor];
     //左
     UIButton *headerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 37, 37)];
     headerButton.layer.cornerRadius = headerButton.bounds.size.width/2.0f;

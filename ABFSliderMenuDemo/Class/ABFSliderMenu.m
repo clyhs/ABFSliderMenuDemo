@@ -67,6 +67,7 @@ static CGFloat MinActionSpeed = 500;
 
 -(void)setLeftViewController:(UIViewController *)leftViewController{
     _leftViewController = leftViewController;
+    self.isShow = NO;
     //提前设置ViewController的viewframe，为了懒加载view造成的frame问题，所以通过setter设置了新的view
     _leftViewController.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0.00001, self.view.bounds.size.height)];
     _leftViewController.view.alpha = 0;
@@ -79,12 +80,15 @@ static CGFloat MinActionSpeed = 500;
 
 //显示主视图
 -(void)showRootViewControllerAnimated:(BOOL)animated{
+    self.isShow = NO;
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:[self animationDurationAnimated:animated] animations:^{
         CGRect frame = weakSelf.rootViewController.view.frame;
         frame.origin.x = 0;
         weakSelf.rootViewController.view.frame = frame;
-        [self updateLeftMenuFrame];
+        //self.leftViewController.view.frame = CGRectMake(0, 0, 0.001, self.view.bounds.size.height);
+        //self.leftViewController.view.alpha = 0.0;
+        [weakSelf updateLeftMenuFrame];
         weakSelf.coverView.alpha = 0;
     }completion:^(BOOL finished) {
         weakSelf.coverView.hidden = true;
@@ -100,15 +104,25 @@ static CGFloat MinActionSpeed = 500;
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:[self animationDurationAnimated:animated] animations:^{
         weakSelf.rootViewController.view.center = CGPointMake(weakSelf.rootViewController.view.bounds.size.width/2 + weakSelf.menuWidth, weakSelf.rootViewController.view.center.y);
-        weakSelf.leftViewController.view.frame = CGRectMake(0, 0, [weakSelf menuWidth], self.view.bounds.size.height);
-        weakSelf.leftViewController.view.alpha = 1.0;
+        [weakSelf updateLeftMenuFrame];
+        //self.leftViewController.view.frame = CGRectMake(0, 0, [self menuWidth], self.view.bounds.size.height);
+        //self.leftViewController.view.alpha = 1.0;
         weakSelf.coverView.alpha = MaxCoverAlpha;
     }];
 }
 
 //更新左侧菜单位置
 - (void)updateLeftMenuFrame {
-    _leftViewController.view.center = CGPointMake(CGRectGetMinX(_rootViewController.view.frame)/2, _leftViewController.view.center.y);
+    self.isShow = !self.isShow;
+    /*
+    _leftViewController.view.center = CGPointMake(CGRectGetMinX(_rootViewController.view.frame)/2, _leftViewController.view.center.y);*/
+    if(self.isShow){
+        self.leftViewController.view.frame = CGRectMake(0, 0, 0.001, self.view.bounds.size.height);
+        self.leftViewController.view.alpha = 0.0;
+    }else{
+        self.leftViewController.view.frame = CGRectMake(0, 0, [self menuWidth], self.view.bounds.size.height);
+        self.leftViewController.view.alpha = 1.0;
+    }
 }
 
 //菜单宽度
